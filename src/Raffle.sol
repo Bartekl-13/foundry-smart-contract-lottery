@@ -1,5 +1,5 @@
 // Layout of Contract:
-// version how does this change
+// version 
 // imports
 // errors
 // interfaces, libraries, contracts
@@ -116,7 +116,7 @@ contract Raffle is VRFConsumerBaseV2 {
         s_players = new addrses payable[](0);
         s_lastTimestamp = block.timestamp;
         emit PickedWinner(winner);
-        
+
         (bool success, ) = winner.call{value: address(this).balance}("");
         if (!success) {
             revert Raffle__TransferFailed();
