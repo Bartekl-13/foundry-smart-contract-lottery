@@ -75,6 +75,7 @@ contract Raffle is VRFConsumerBaseV2 {
     /** Events */
     event EnteredRaffle(address indexed player);
     event PickedWinner(address indexed winner);
+    event RequestedRaffleWinner(uint256 indexed requestId);
 
     constructor(
         uint256 entranceFee,
@@ -114,7 +115,7 @@ contract Raffle is VRFConsumerBaseV2 {
      * 3. Contract has ETH (players)
      * 4. (Implicit) The subscription is funded with LINK
      */
-    function checkUpKeep(
+    function checkUpkeep(
         bytes memory /* checkData */
     ) public view returns (bool upKeepNeeded, bytes memory /* performData */) {
         bool timeHasPassed = (block.timestamp - s_lastTimestamp) >= i_interval;
@@ -128,7 +129,7 @@ contract Raffle is VRFConsumerBaseV2 {
     // Get a random number, use the random number to pick a player
     // Be automatically called
     function performUpkeep(bytes calldata /* performData */) external {
-        (bool upKeepNeeded, ) = checkUpKeep("");
+        (bool upKeepNeeded, ) = checkUpkeep("");
         if (!upKeepNeeded) {
             revert Raffle__UpkeepNotNeeded(
                 address(this).balance,
@@ -137,13 +138,15 @@ contract Raffle is VRFConsumerBaseV2 {
             );
         }
         s_raffleState = RaffleState.CALCULATING; // Thanks to that, while calculating people would be unable to enter the raffle
-        i_vrfCoordinator.requestRandomWords(
+        uint256 requestId = i_vrfCoordinator.requestRandomWords(
             i_gasLane,
             i_subscriptionId,
             REQUEST_CONFIRMATIONS,
             i_callbackGasLimit,
             NUM_WORDS
         );
+
+        emit RequestedRaffleWinner(requestId);
     }
 
     function fulfillRandomWords(
