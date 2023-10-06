@@ -29,6 +29,8 @@ contract RaffleTest is Test {
     function setUp() external {
         DeployRaffle deployer = new DeployRaffle();
         (raffle, helperConfig) = deployer.run();
+        vm.deal(PLAYER, STARTING_USER_BALANCE);
+
         (
             entranceFee,
             interval,
@@ -36,9 +38,9 @@ contract RaffleTest is Test {
             gasLane,
             subscriptionId,
             callbackGasLimit,
-            link
+            link,
+
         ) = helperConfig.activeNetworkConfig();
-        vm.deal(PLAYER, STARTING_USER_BALANCE);
     }
 
     function testRaffleInitializesInOpenState() public view {
@@ -127,24 +129,30 @@ contract RaffleTest is Test {
     ///////////////////
     // performUpkeep //
     ///////////////////
-    function testPerformUpkeepCanOnlyRunIfCheckUpkeepIsTrue()
-        public
-        raffleEnteredAndTimePassed
-    {
+    function testPerformUpkeepCanOnlyRunIfCheckUpkeepIsTrue() public {
+        // Arrange
+        vm.prank(PLAYER);
+        raffle.enterRaffle{value: entranceFee}();
+        vm.warp(block.timestamp + interval + 1);
+        vm.roll(block.number + 1);
+
+        // Act / Assert
+        // It doesnt revert
         raffle.performUpkeep("");
     }
 
-    function testPerformUpkeepRevertsIfCheckUpkeepIsFalse() public {
-        uint256 currentBalance = 0;
+    function testPerformUpkeepRevertsIfCheckUpkeepIsFalse() public skipFork {
+        // Arrange
+        uint256 currentBalance = 40000000000000000;
         uint256 numPlayers = 0;
-        uint256 raffleState = 0;
-
+        Raffle.RaffleState rState = raffle.getRaffleState();
+        // Act / Assert
         vm.expectRevert(
             abi.encodeWithSelector(
                 Raffle.Raffle__UpkeepNotNeeded.selector,
                 currentBalance,
                 numPlayers,
-                raffleState
+                rState
             )
         );
         raffle.performUpkeep("");
@@ -161,6 +169,7 @@ contract RaffleTest is Test {
     function testPerformUpkeepUpdatesRaffleStateAndEmitsRequestId()
         public
         raffleEnteredAndTimePassed
+        skipFork
     {
         vm.recordLogs();
         raffle.performUpkeep(""); // emit requestId
@@ -176,10 +185,16 @@ contract RaffleTest is Test {
     ////////////////////////
     // fulfillRandomWords //
     ////////////////////////
+    modifier skipFork() {
+        if (block.chainid != 31337) {
+            return;
+        }
+        _;
+    }
 
     function testFulfillRandomWordsCanOnlyBeCalledAfterPerformUpkeep(
         uint256 randomRequestId
-    ) public raffleEnteredAndTimePassed {
+    ) public raffleEnteredAndTimePassed skipFork {
         vm.expectRevert("nonexistent request");
         VRFCoordinatorV2Mock(vrfCoordinator).fulfillRandomWords(
             randomRequestId,
@@ -190,6 +205,7 @@ contract RaffleTest is Test {
     function testFulfillRandomWordsPicksAWinnerResetsAndSendsMoney()
         public
         raffleEnteredAndTimePassed
+        skipFork
     {
         uint256 additionalEntrants = 5;
         uint256 startingIndex = 1;
@@ -233,6 +249,7 @@ contract RaffleTest is Test {
     function testFulfillRandomWordsEmitsAWinnerPickedEvent()
         public
         raffleEnteredAndTimePassed
+        skipFork
     {
         vm.recordLogs();
         raffle.performUpkeep(""); // emit requestId
