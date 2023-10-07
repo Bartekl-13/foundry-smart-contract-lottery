@@ -1,0 +1,5 @@
+PRIVATE_KEY="Your private key, DO NOT USE ONE WITH REAL MONEY"
+
+SEPOLIA_RPC_URL="Your sepolia RPC URL from Alchemy"
+
+ETHERSCAN_API_KEY="Your ethersan API KEY"
