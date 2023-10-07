@@ -9,12 +9,26 @@
     "linkReferences": {}
   },
   "ast": {
-    "absolutePath": "test/unit/InteractionsTest.t.sol",
-    "id": 45722,
+    "absolutePath": "test/integration/InteractionsTest.t.sol",
+    "id": 2,
     "exportedSymbols": {},
     "nodeType": "SourceUnit",
-    "src": "0:0:29",
-    "nodes": []
+    "src": "32:24:0",
+    "nodes": [
+      {
+        "id": 1,
+        "nodeType": "PragmaDirective",
+        "src": "32:24:0",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "^",
+          "0.8",
+          ".18"
+        ]
+      }
+    ],
+    "license": "MIT"
   },
-  "id": 29
+  "id": 0
 }

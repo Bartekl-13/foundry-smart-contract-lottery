@@ -1178,8 +1178,8 @@
       }
     },
     "script/HelperConfig.s.sol": {
-      "lastModificationDate": 1696561756026,
-      "contentHash": "8ddc12ea3712290611f42b0662adb3ae",
+      "lastModificationDate": 1696657167514,
+      "contentHash": "ccb74e4e6e618fdc4b378e56969e5950",
       "sourceName": "script/HelperConfig.s.sol",
       "solcConfig": {
         "settings": {
@@ -1240,7 +1240,7 @@
       }
     },
     "script/Interactions.s.sol": {
-      "lastModificationDate": 1696562900876,
+      "lastModificationDate": 1696656162034,
       "contentHash": "96baba57170d5f57a2441531f54a7ada",
       "sourceName": "script/Interactions.s.sol",
       "solcConfig": {
@@ -1353,6 +1353,47 @@
         }
       }
     },
+    "test/integration/InteractionsTest.t.sol": {
+      "lastModificationDate": 1696658148894,
+      "contentHash": "2ed4eecc3dbfc5798687aeb90af6cde5",
+      "sourceName": "test/integration/InteractionsTest.t.sol",
+      "solcConfig": {
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "metadata": {
+            "useLiteralContent": false,
+            "bytecodeHash": "ipfs",
+            "appendCBOR": true
+          },
+          "outputSelection": {
+            "*": {
+              "": [
+                "ast"
+              ],
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ]
+            }
+          },
+          "evmVersion": "paris",
+          "libraries": {}
+        }
+      },
+      "imports": [],
+      "versionRequirement": "^0.8.18",
+      "artifacts": {
+        "InteractionsTest.t": {
+          "0.8.19+commit.7dd6d404.Linux.gcc": "InteractionsTest.t.sol/InteractionsTest.t.json"
+        }
+      }
+    },
     "test/mocks/LinkToken.sol": {
       "lastModificationDate": 1696474054687,
       "contentHash": "e61feab8bb36626081f8ce3e7a1a25f3",
@@ -1399,50 +1440,9 @@
         }
       }
     },
-    "test/unit/InteractionsTest.t.sol": {
-      "lastModificationDate": 1696473447067,
-      "contentHash": "d41d8cd98f00b204e9800998ecf8427e",
-      "sourceName": "test/unit/InteractionsTest.t.sol",
-      "solcConfig": {
-        "settings": {
-          "optimizer": {
-            "enabled": true,
-            "runs": 200
-          },
-          "metadata": {
-            "useLiteralContent": false,
-            "bytecodeHash": "ipfs",
-            "appendCBOR": true
-          },
-          "outputSelection": {
-            "*": {
-              "": [
-                "ast"
-              ],
-              "*": [
-                "abi",
-                "evm.bytecode",
-                "evm.deployedBytecode",
-                "evm.methodIdentifiers",
-                "metadata"
-              ]
-            }
-          },
-          "evmVersion": "paris",
-          "libraries": {}
-        }
-      },
-      "imports": [],
-      "versionRequirement": null,
-      "artifacts": {
-        "InteractionsTest.t": {
-          "0.8.19+commit.7dd6d404.Linux.gcc": "InteractionsTest.t.sol/InteractionsTest.t.json"
-        }
-      }
-    },
     "test/unit/RaffleTest.t.sol": {
-      "lastModificationDate": 1696563451966,
-      "contentHash": "79c1a9cc2f3bd0ca55e9d515c8e5eff2",
+      "lastModificationDate": 1696657691084,
+      "contentHash": "33ae4368a03a54a8fb2e4f96fa5e08fb",
       "sourceName": "test/unit/RaffleTest.t.sol",
       "solcConfig": {
         "settings": {

@@ -38,7 +38,7 @@ contract RaffleTest is Test {
             gasLane,
             subscriptionId,
             callbackGasLimit,
-            link,
+            ,
 
         ) = helperConfig.activeNetworkConfig();
     }
@@ -143,7 +143,7 @@ contract RaffleTest is Test {
 
     function testPerformUpkeepRevertsIfCheckUpkeepIsFalse() public skipFork {
         // Arrange
-        uint256 currentBalance = 40000000000000000;
+        uint256 currentBalance = 0;
         uint256 numPlayers = 0;
         Raffle.RaffleState rState = raffle.getRaffleState();
         // Act / Assert
